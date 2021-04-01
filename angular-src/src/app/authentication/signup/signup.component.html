@@ -1,99 +1,114 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 p-3">
+<div class="container-fluid p-3">
+    <div class="row p-3">
+        <div class="col-md-6 d-block justify-content-center">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn" 
-                            (click)="setRegisteringEntity('hospital')" 
-                            [ngClass]="registeringEntity === 'hospital' ? 'btn-primary' : 'btn-outline-primary'">
-                            
-                            <input type="radio" name="entity" id="hospital" checked> Hospital
-                        </label>
-                        <label class="btn" 
-                            (click)="setRegisteringEntity('human')" 
-                            [ngClass]="registeringEntity === 'human' ? 'btn-primary' : 'btn-outline-primary'">
-                            
-                            <input type="radio" name="entity" id="human"> Human
-                        </label>
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn" 
+                                    (click)="setRegisteringEntity('hospital')" 
+                                    [ngClass]="registeringEntity === 'hospital' ? 'btn-primary' : 'btn-outline-primary'">
+                                    
+                                    <input type="radio" name="entity" id="hospital" checked> Hospital
+                                </label>
+                                <label class="btn" 
+                                    (click)="setRegisteringEntity('human')" 
+                                    [ngClass]="registeringEntity === 'human' ? 'btn-primary' : 'btn-outline-primary'">
+                                    
+                                    <input type="radio" name="entity" id="human"> Human
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <form>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input id="name" class="form-control" placeholder="Enter Name">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input id="name" class="form-control" placeholder="Enter Name">
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone</label>
+                                    <input id="phoneNumber" class="form-control" placeholder="Enter Phone Number">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone</label>
-                            <input id="phoneNumber" class="form-control" placeholder="Enter Phone Number">
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" class="form-control" placeholder="Enter Email">
+                                </div>
+                            </div>
+    
+                            <div *ngIf="registeringEntity === 'hospital'" class="col-md-6">
+                                <label for="hospitalType">Hospital Type</label>
+                                <br>
+                                <select id="hospitalType">
+                                    <option>Government Aided</option>
+                                    <option>Private</option>
+                                </select>
+                            </div>
+    
+                            <div *ngIf="registeringEntity === 'human'" class="col-md-6">
+                                <label for="gender">Gender</label>
+                                <br>
+                                <select id="gender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Non-Binary</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <!-- <input id="address" class="form-control" placeholder="Enter Address"> -->
+                                    <textarea id="address" class="form-control" rows="2" placeholder="Enter Address"></textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input id="password" type="password" class="form-control" placeholder="Enter Password">
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-secondary btn-block">Clear</button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-block">Sign Up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" class="form-control" placeholder="Enter Email">
-                        </div>
-                    </div>
-
-                    <div *ngIf="registeringEntity === 'hospital'" class="col-md-3">
-                        <label for="hospitalType">Hospital Type</label>
-                        <br>
-                        <select id="hospitalType">
-                            <option>Government Aided</option>
-                            <option>Private</option>
-                        </select>
-                    </div>
-
-                    <div *ngIf="registeringEntity === 'human'" class="col-md-3">
-                        <label for="gender">Gender</label>
-                        <br>
-                        <select id="gender">
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Non-Binary</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <!-- <input id="address" class="form-control" placeholder="Enter Address"> -->
-                            <textarea id="address" class="form-control" rows=2 placeholder="Enter Address"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input id="password" type="password" class="form-control" placeholder="Enter Password">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-1">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-secondary btn-block">Clear</button>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-block">Sign Up</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center my-auto h-100">
+            <h2 class="h2">
+                Already have an account?
+                <a href="#" class="dark-link">Login</a>
+            </h2>
         </div>
     </div>
 </div>
