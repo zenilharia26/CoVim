@@ -1,0 +1,5 @@
+.custom-border {
+    border: 2px solid;
+    border-color: lightgray;
+    border-radius: 10px;
+}
