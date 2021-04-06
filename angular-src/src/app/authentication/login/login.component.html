@@ -10,18 +10,18 @@
                 <hr>
                 <div class="row">
                     <div class="col-12">
-                        <form>
+                        <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
                             <div class="row offset-1">
                                 <div class="col-10">
                                     <div class="form-group">
-                                        <input id="email" type="email" class="form-control" placeholder="Enter Email" autocomplete="off">
+                                        <input name="email" id="email" type="email" class="form-control" placeholder="Enter Email" autocomplete="off" autocomplete="off" ngModel required email>
                                     </div>
                                 </div>
                             </div>
                             <div class="row offset-1">
                                 <div class="col-10">
                                     <div class="form-group">
-                                        <input id="password" type="password" class="form-control" placeholder="Enter Password">
+                                        <input name="password" id="password" type="password" class="form-control" placeholder="Enter Password" ngModel required>
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-6 ">
                                             <div class="form-group">
-                                                <button class="btn btn-success btn-block" type="submit">Login</button>
+                                                <button class="btn btn-success btn-block" type="submit" [disabled]="loginForm.invalid">Login</button>
                                             </div>
                                         </div>
                                     </div>

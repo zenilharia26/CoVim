@@ -4,6 +4,11 @@
     border-radius: 10px;
 }
 
+input.ng-touched.ng-invalid {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
 @media screen and (max-width: 767px) {
     
     .w-25 {

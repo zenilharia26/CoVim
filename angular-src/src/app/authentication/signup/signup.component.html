@@ -26,19 +26,19 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <form>
+                    <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input id="name" class="form-control" placeholder="Enter Name">
+                                    <input name="name" id="name" class="form-control" placeholder="Enter Name" ngModel autocomplete="off" required>
                                 </div>
                             </div>
     
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone</label>
-                                    <input id="phoneNumber" class="form-control" placeholder="Enter Phone Number">
+                                    <input name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Enter Phone Number" ngModel autocomplete="off" required>
                                 </div>
                             </div>
                         </div>
@@ -47,27 +47,33 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control" placeholder="Enter Email">
+                                    <input name="email" id="email" type="email" class="form-control" placeholder="Enter Email" ngModel autocomplete="off" required email>
                                 </div>
                             </div>
     
                             <div *ngIf="registeringEntity === 'hospital'" class="col-md-6">
                                 <label for="hospitalType">Hospital Type</label>
                                 <br>
-                                <select id="hospitalType">
+                                <select name="hospitalType" id="hospitalType" ngModel required>
                                     <option>Government Aided</option>
                                     <option>Private</option>
                                 </select>
+                                <span class="text text-danger" *ngIf="signupForm.controls.hospitalType.touched && signupForm.controls.hospitalType.invalid">
+                                    Please select Hospital Type
+                                </span>
                             </div>
     
                             <div *ngIf="registeringEntity === 'human'" class="col-md-6">
                                 <label for="gender">Gender</label>
                                 <br>
-                                <select id="gender">
+                                <select name="gender" id="gender" ngModel required>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Non-Binary</option>
                                 </select>
+                                <span class="text text-danger" *ngIf="signupForm.controls.gender.touched && signupForm.controls.gender.invalid">
+                                    Please select Gender
+                                </span>
                             </div>
                         </div>
     
@@ -76,27 +82,43 @@
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <!-- <input id="address" class="form-control" placeholder="Enter Address"> -->
-                                    <textarea id="address" class="form-control" rows="2" placeholder="Enter Address"></textarea>
+                                    <textarea name="address" id="address" class="form-control" rows="2" placeholder="Enter Address" ngModel autocomplete="off" required></textarea>
                                 </div>
                             </div>
     
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input id="password" type="password" class="form-control" placeholder="Enter Password">
+                                    <input name="password" id="password" type="password" class="form-control" placeholder="Enter Password" ngModel required>
                                 </div>
                             </div>
                         </div>
-    
+                        
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="registeringEntity === 'hospital'">
+                                <div class="form-group">
+                                    <label for="hospitalLicense">Upload License</label>
+                                    <input name="hospitalLicense" id="hospitalLicense" type="file" class="form-control" ngModel required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="registeringEntity === 'human'">
+                                <div class="form-group">
+                                    <label for="birthCertificate">Upload Birth Certificate</label>
+                                    <input name="birthCertificate" id="birthCertificate" type="file" class="form-control" ngModel required>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-secondary btn-block">Clear</button>
+                                    <button type="button" class="btn btn-secondary btn-block" (click)="onClear()">Clear</button>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success btn-block">Sign Up</button>
+                                    <button type="submit" class="btn btn-success btn-block" [disabled]="signupForm.invalid">Sign Up</button>
                                 </div>
                             </div>
                         </div>
