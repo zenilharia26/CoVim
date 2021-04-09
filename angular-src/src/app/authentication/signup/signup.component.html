@@ -13,10 +13,10 @@
                                     <input type="radio" name="entity" id="hospital" checked> Hospital
                                 </label>
                                 <label class="btn" 
-                                    (click)="setRegisteringEntity('human')" 
-                                    [ngClass]="registeringEntity === 'human' ? 'btn-primary' : 'btn-outline-primary'">
+                                    (click)="setRegisteringEntity('person')" 
+                                    [ngClass]="registeringEntity === 'person' ? 'btn-primary' : 'btn-outline-primary'">
                                     
-                                    <input type="radio" name="entity" id="human"> Human
+                                    <input type="radio" name="entity" id="person"> Person
                                 </label>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                             <div *ngIf="registeringEntity === 'hospital'" class="col-md-6">
                                 <label for="hospitalType">Hospital Type</label>
                                 <br>
-                                <select name="hospitalType" id="hospitalType" ngModel required>
+                                <select name="hospitalType" id="hospitalType" [value]="'Government Aided'" ngModel required>
                                     <option>Government Aided</option>
                                     <option>Private</option>
                                 </select>
@@ -63,10 +63,10 @@
                                 </span>
                             </div>
     
-                            <div *ngIf="registeringEntity === 'human'" class="col-md-6">
+                            <div *ngIf="registeringEntity === 'person'" class="col-md-6">
                                 <label for="gender">Gender</label>
                                 <br>
-                                <select name="gender" id="gender" ngModel required>
+                                <select name="gender" id="gender" [value]="'Male'" ngModel required>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Non-Binary</option>
@@ -98,14 +98,14 @@
                             <div class="col-md-6" *ngIf="registeringEntity === 'hospital'">
                                 <div class="form-group">
                                     <label for="hospitalLicense">Upload License</label>
-                                    <input name="hospitalLicense" id="hospitalLicense" type="file" class="form-control" ngModel required>
+                                    <input name="hospitalLicense" id="hospitalLicense" type="file" (change)="handleFileInput($event.target.files)" class="form-control" required>
                                 </div>
                             </div>
 
-                            <div class="col-md-6" *ngIf="registeringEntity === 'human'">
+                            <div class="col-md-6" *ngIf="registeringEntity === 'person'">
                                 <div class="form-group">
                                     <label for="birthCertificate">Upload Birth Certificate</label>
-                                    <input name="birthCertificate" id="birthCertificate" type="file" class="form-control" ngModel required>
+                                    <input name="birthCertificate" id="birthCertificate" type="file" (change)="handleFileInput($event.target.files)" class="form-control"  required>
                                 </div>
                             </div>
                         </div>

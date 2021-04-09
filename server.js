@@ -11,8 +11,10 @@ mongoose.connect('mongodb://localhost:27017/CoVim', {useNewUrlParser: true, useU
 });
 
 const app = express();
+const authRouter = require('./routers/auth');
 
 app.use(cors());
+app.use('/auth', authRouter);
 
 const port = 3000;
 

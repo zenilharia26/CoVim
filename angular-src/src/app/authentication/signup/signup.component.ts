@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthenticationService } from '../authentication-service';
 
 @Component({
   selector: 'app-signup',
@@ -10,9 +11,10 @@ export class SignupComponent implements OnInit {
 
   isHospital: boolean = true;
   registeringEntity: string = 'hospital';
+  file: File;
   @ViewChild('signupForm') signupForm: NgForm;
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
@@ -25,24 +27,16 @@ export class SignupComponent implements OnInit {
     this.registeringEntity = entity;
   }
 
+  handleFileInput(files: FileList) {
+    this.file = files.item(0);
+  }
+
   onSubmit(signupForm: NgForm) {
-    if (this.registeringEntity === 'hospital') {
-      console.log(signupForm.value.name);
-      console.log(signupForm.value.phoneNumber);
-      console.log(signupForm.value.email);
-      console.log(signupForm.value.password);
-      console.log(signupForm.value.address);
-      console.log(signupForm.value.hospitalType);
-      console.log(signupForm.value.hospitalLicense);
-    } else {
-      console.log(signupForm.value.name);
-      console.log(signupForm.value.phoneNumber);
-      console.log(signupForm.value.email);
-      console.log(signupForm.value.password);
-      console.log(signupForm.value.address);
-      console.log(signupForm.value.gender);
-      console.log(signupForm.value.birthCertificate);
-    }
+    this.authenticationService.signup(signupForm, this.registeringEntity, this.file).subscribe(response => {
+      console.log(response);
+    }, errorMessage => {
+      console.log(errorMessage);
+    });
   }
 
   onClear() {
