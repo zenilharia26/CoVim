@@ -34,4 +34,12 @@ export class AuthenticationService {
 
         return this.httpClient.post('http://localhost:3000/auth/signup', signupFormData);
     }
+
+    login(form: NgForm) {
+        const formData = {
+            email: form.value.email,
+            password: form.value.password
+        };
+        return this.httpClient.post('http://localhost:3000/auth/login', formData);
+    }
 }

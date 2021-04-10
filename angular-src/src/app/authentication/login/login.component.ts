@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthenticationService } from '../authentication-service';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,17 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('loginForm') loginForm: NgForm;
 
-  ngOnInit(): void {
-  }
+  constructor(private authenticationService: AuthenticationService) { }
 
-  onSubmit(loginForm: NgForm) {
-    console.log(loginForm.value.email);
-    console.log(loginForm.value.password);
+  ngOnInit(): void {}
+
+  onLogin(loginForm: NgForm) {
+    this.authenticationService.login(loginForm).subscribe(response => {
+      console.log(response);
+    }, errorMessage => {
+      console.log(errorMessage);
+    });
   }
 }

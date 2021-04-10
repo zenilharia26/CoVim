@@ -14,6 +14,7 @@ const app = express();
 const authRouter = require('./routers/auth');
 
 app.use(cors());
+app.use(express.json());
 app.use('/auth', authRouter);
 
 const port = 3000;
