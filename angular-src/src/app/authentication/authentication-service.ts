@@ -1,9 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { BehaviorSubject } from "rxjs";
+import { User } from "./user.model";
+import { tap } from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
+
+    user = new BehaviorSubject<User>(null);
 
     constructor(private httpClient: HttpClient) {}
 
@@ -40,6 +45,23 @@ export class AuthenticationService {
             email: form.value.email,
             password: form.value.password
         };
-        return this.httpClient.post('http://localhost:3000/auth/login', formData);
+        return this.httpClient
+        .post<{ message: string, token: string }>('http://localhost:3000/auth/login', formData)
+        .pipe(
+            tap(response => {
+                this.authenticateUser(formData.email, response.token);
+            })
+        );
+    }
+
+    authenticateUser(email: string, token: string) {
+        const user = new User(
+            email,
+            token,
+            new Date().getTime() + (60*60*1000)
+        );
+
+        this.user.next(user);
+        localStorage.setItem('user', JSON.stringify(user));
     }
 }

@@ -18,24 +18,6 @@ const upload = multer({
     storage: storage
 });
 
-function getCollectionDocument(email) {
-    Hospital.findOne({email: email}, (error, result) => {
-        if (error) {
-            return new Error('Database error.');
-        } else if (result) {
-            return result;
-        } else {
-            Person.findOne({email: email}, (error, result) => {
-                if (error) {
-                    return new Error('Database error.');
-                } else {
-                    return result;
-                }
-            });
-        }
-    });
-}
-
 router.post('/signup', upload.single('document'), (req, res) => {
 
     const name = req.body.name;
@@ -47,7 +29,7 @@ router.post('/signup', upload.single('document'), (req, res) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
         if (err) {
             console.log(err);
-            return res.status(500).json({ error: err });
+            return res.status(500).send({ error: err });
         } else {
             hashedPassword = hash;
         }
@@ -65,7 +47,7 @@ router.post('/signup', upload.single('document'), (req, res) => {
     
             newHospital.save();
     
-            return res.status(201).json({ message: 'Registered Successfully' });
+            return res.status(201).send({ message: 'Registered Successfully' });
         } else {
             const newPerson = new Person({
                 name: name,
@@ -79,7 +61,7 @@ router.post('/signup', upload.single('document'), (req, res) => {
     
             newPerson.save();
     
-            return res.status(201).json({ message: 'Registered Successfully' });
+            return res.status(201).send({ message: 'Registered Successfully' });
         }
     });
 });
@@ -91,7 +73,7 @@ router.post('/login', async (req, res, next) => {
     await Hospital.findOne({email: email}, (err, result) => {
         if (err) {
             console.log(err);
-            return res.status(500).json({
+            return res.status(500).send({
                 message: err
             });
         } else if (result) {
@@ -102,7 +84,7 @@ router.post('/login', async (req, res, next) => {
             Person.findOne({email: email}, (err, result) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).json({
+                    return res.status(500).send({
                         message: err
                     });
                 } else if (result) {
@@ -123,24 +105,24 @@ router.post('/login', async (req, res, next) => {
         bcrypt.compare(password, user.password, (err, result) => {
             if (err) {
                 console.log(err);
-                return res.status(500).json({
+                return res.status(500).send({
                     message: err
                 });
             } else if (result) {
                 const token = jwt.sign({name: user.name}, 'verySecretValue', {expiresIn: '1h'});
 
-                return res.status(200).json({
+                return res.status(200).send({
                     message: 'Login successful',
                     token: token
                 });
             } else {
-                return res.status(401).json({
+                return res.status(401).send({
                     message: 'Invalid Password'
                 });
             }
         });
     } else {
-        return res.status(404).json({
+        return res.status(404).send({
             message: 'User not found'
         });
     }

@@ -44,6 +44,14 @@
     </div>
 </div>
 
+<div class="row" *ngIf="error">
+    <div class="col-12 d-flex justify-content-center">
+        <span class="alert alert-danger">
+            {{ error }}
+        </span>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12 d-flex justify-content-center">
         <h5>Don't have an account? <a class="dark-link" [routerLink]="['/', 'authenticate', 'signup']">Sign Up!</a></h5>

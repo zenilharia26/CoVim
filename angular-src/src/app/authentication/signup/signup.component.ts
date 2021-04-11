@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication-service';
 
 @Component({
@@ -14,7 +15,7 @@ export class SignupComponent implements OnInit {
   file: File;
   @ViewChild('signupForm') signupForm: NgForm;
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +35,7 @@ export class SignupComponent implements OnInit {
   onSubmit(signupForm: NgForm) {
     this.authenticationService.signup(signupForm, this.registeringEntity, this.file).subscribe(response => {
       console.log(response);
+      this.router.navigate(['/', 'authenticate', 'login']);
     }, errorMessage => {
       console.log(errorMessage);
     });
