@@ -4,13 +4,16 @@ import { NgForm } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { User } from "./user.model";
 import { tap } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
 
     user = new BehaviorSubject<User>(null);
+    loginTime: number = 60*60*1000;
+    expiryTimeout: any;
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient, private router: Router) {}
 
     renameFile(name: string, document: string, fileType: string): string {
         const dateTime = new Date().getTime();
@@ -54,14 +57,32 @@ export class AuthenticationService {
         );
     }
 
+    logout() {
+        this.user.next(null);
+        localStorage.removeItem('user');
+
+        if (this.expiryTimeout) {
+            clearTimeout(this.expiryTimeout);
+        }
+        this.expiryTimeout = null;
+        this.router.navigate(['/', 'home']);
+    }
+
+    automaticLogout() {
+        this.expiryTimeout = setTimeout(() => {
+            this.logout();
+        }, this.loginTime);
+    }
+
     authenticateUser(email: string, token: string) {
         const user = new User(
             email,
             token,
-            new Date().getTime() + (60*60*1000)
+            new Date().getTime() + this.loginTime
         );
 
         this.user.next(user);
         localStorage.setItem('user', JSON.stringify(user));
+        this.automaticLogout();
     }
 }
