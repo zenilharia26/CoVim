@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'authenticate', loadChildren: () => import('./authentication/authentication-routing.module').then(module => module.AuthenticationRouting) },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuard] }
+  { path: 'dashboard', component: DashboardComponent, /*canActivate: [AuthenticationGuard]*/ }
 ];
 
 @NgModule({
