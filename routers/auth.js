@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Hospital = require('../models/Hospital');
-const Person = require('../models/Person');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const salt = 10;
@@ -34,98 +33,64 @@ router.post('/signup', upload.single('document'), (req, res) => {
             hashedPassword = hash;
         }
 
-        if (req.body.registeringEntity === 'hospital') {
-            const newHospital = new Hospital({
-                name: name,
-                phone: phone,
-                email: email,
-                hospitalType: req.body.hospitalType,
-                address: address,
-                password: hashedPassword,
-                license: req.file.originalname
-            });
+        const newHospital = new Hospital({
+            name: name,
+            phone: phone,
+            email: email,
+            hospitalType: req.body.hospitalType,
+            address: address,
+            password: hashedPassword,
+            license: req.file.originalname
+        });
     
-            newHospital.save();
+        newHospital.save();
     
-            return res.status(201).send({ message: 'Registered Successfully' });
-        } else {
-            const newPerson = new Person({
-                name: name,
-                phone: phone,
-                email: email,
-                gender: req.body.gender,
-                address: address,
-                password: hashedPassword,
-                birthCertificate: req.file.originalname
-            });
-    
-            newPerson.save();
-    
-            return res.status(201).send({ message: 'Registered Successfully' });
-        }
+        return res.status(201).send({ message: 'Registered Successfully' });
     });
 });
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', (req, res, next) => {
     const email = req.body.email;
-    const password = req.body.password;
+    const sentPassword = req.body.password;
 
-    await Hospital.findOne({email: email}, (err, result) => {
+    Hospital.findOne({ email: email }, (err, user) => {
         if (err) {
             console.log(err);
             return res.status(500).send({
-                message: err
+                message: 'Internal Server Error'
             });
-        } else if (result) {
-            console.log('Found user');
-            req.user = result;
-            next();
-        } else {
-            Person.findOne({email: email}, (err, result) => {
+        } else if (user) {
+            const userPassword = user.password;
+
+            bcrypt.compare(sentPassword, userPassword, (err, result) => {
                 if (err) {
                     console.log(err);
                     return res.status(500).send({
-                        message: err
+                        message: 'Internal Server Error'
                     });
                 } else if (result) {
-                    console.log('Found user');
-                    req.user = result;
-                    next();
+                    const token = jwt.sign({name: user.name}, 'verySecretValue', {expiresIn: '1h'});
+                    let message = 'Login Successful.'
+                    return res.status(200).send({
+                        message: message,
+                        token: token
+                    });
                 } else {
-                    req.user = null;
-                    next();
+                    let message = 'Invalid Password';
+                    console.log(message);
+                    return res.status(401).send({
+                        message: message
+                    });
                 }
+            });
+        } else {
+            let message = 'User not found.';
+            console.log(message);
+            return res.status(404).send({
+                message: message
             });
         }
     });
-}, (req, res) => {
-    if (req.user) {
-        const user = req.user;
-        const password = req.body.password;
-        bcrypt.compare(password, user.password, (err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send({
-                    message: err
-                });
-            } else if (result) {
-                const token = jwt.sign({name: user.name}, 'verySecretValue', {expiresIn: '1h'});
-
-                return res.status(200).send({
-                    message: 'Login successful',
-                    token: token
-                });
-            } else {
-                return res.status(401).send({
-                    message: 'Invalid Password'
-                });
-            }
-        });
-    } else {
-        return res.status(404).send({
-            message: 'User not found'
-        });
-    }
-});
+}); 
 
 module.exports = router;

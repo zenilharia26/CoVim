@@ -5,20 +5,6 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn" 
-                                    (click)="setRegisteringEntity('hospital')" 
-                                    [ngClass]="registeringEntity === 'hospital' ? 'btn-primary' : 'btn-outline-primary'">
-                                    
-                                    <input type="radio" name="entity" id="hospital" checked> Hospital
-                                </label>
-                                <label class="btn" 
-                                    (click)="setRegisteringEntity('person')" 
-                                    [ngClass]="registeringEntity === 'person' ? 'btn-primary' : 'btn-outline-primary'">
-                                    
-                                    <input type="radio" name="entity" id="person"> Person
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +37,7 @@
                                 </div>
                             </div>
     
-                            <div *ngIf="registeringEntity === 'hospital'" class="col-md-6">
+                            <div class="col-md-6">
                                 <label for="hospitalType">Hospital Type</label>
                                 <br>
                                 <select name="hospitalType" id="hospitalType" [value]="'Government Aided'" ngModel required>
@@ -60,19 +46,6 @@
                                 </select>
                                 <span class="text text-danger" *ngIf="signupForm.controls.hospitalType.touched && signupForm.controls.hospitalType.invalid">
                                     Please select Hospital Type
-                                </span>
-                            </div>
-    
-                            <div *ngIf="registeringEntity === 'person'" class="col-md-6">
-                                <label for="gender">Gender</label>
-                                <br>
-                                <select name="gender" id="gender" [value]="'Male'" ngModel required>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Non-Binary</option>
-                                </select>
-                                <span class="text text-danger" *ngIf="signupForm.controls.gender.touched && signupForm.controls.gender.invalid">
-                                    Please select Gender
                                 </span>
                             </div>
                         </div>
@@ -95,17 +68,10 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-md-6" *ngIf="registeringEntity === 'hospital'">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="hospitalLicense">Upload License</label>
                                     <input name="hospitalLicense" id="hospitalLicense" type="file" (change)="handleFileInput($event.target.files)" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6" *ngIf="registeringEntity === 'person'">
-                                <div class="form-group">
-                                    <label for="birthCertificate">Upload Birth Certificate</label>
-                                    <input name="birthCertificate" id="birthCertificate" type="file" (change)="handleFileInput($event.target.files)" class="form-control"  required>
                                 </div>
                             </div>
                         </div>

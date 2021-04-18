@@ -10,8 +10,6 @@ import { AuthenticationService } from '../authentication-service';
 })
 export class SignupComponent implements OnInit {
 
-  isHospital: boolean = true;
-  registeringEntity: string = 'hospital';
   file: File;
   @ViewChild('signupForm') signupForm: NgForm;
 
@@ -20,20 +18,12 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggle(clickedEntity: string) {
-    this.isHospital = clickedEntity === 'hospital';
-  }
-
-  setRegisteringEntity(entity: string) {
-    this.registeringEntity = entity;
-  }
-
   handleFileInput(files: FileList) {
     this.file = files.item(0);
   }
 
   onSubmit(signupForm: NgForm) {
-    this.authenticationService.signup(signupForm, this.registeringEntity, this.file).subscribe(response => {
+    this.authenticationService.signup(signupForm, this.file).subscribe(response => {
       console.log(response);
       this.router.navigate(['/', 'authenticate', 'login']);
     }, errorMessage => {
