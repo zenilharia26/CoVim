@@ -1,7 +1,10 @@
-.custom-border {
-    border: 2px solid;
-    border-color: lightgray;
-    border-radius: 10px;
+#form-container {
+    background-color: white;
+    border-radius: 15px;
+}
+
+form {
+    margin-top: 3%;
 }
 
 input.ng-touched.ng-invalid {

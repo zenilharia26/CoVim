@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #f7f7fc;
+    overflow: auto;
+}
+
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}

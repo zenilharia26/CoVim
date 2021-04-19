@@ -3,5 +3,10 @@ input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
 }
 
 input.ng-touched.ng-valid {
-    border: 2px solid limegreen;
+    border: 2px solid #28a745;
+}
+
+#form-container {
+    background-color: white;
+    border-radius: 15px;
 }

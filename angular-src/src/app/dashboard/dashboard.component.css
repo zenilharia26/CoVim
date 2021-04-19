@@ -1,10 +1,6 @@
-body {
-    background-color: #F2F6F8;
-}
-
 .sidebar {
     height: 100vh;
-    background-color: #364859;
+    background-color: #222E3C;
     z-index: 1;
     color: #F9FEFF;
 }
