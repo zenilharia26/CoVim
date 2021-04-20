@@ -1,0 +1,11 @@
+.material-icons {
+    vertical-align: text-bottom;
+    font-size: xx-large;
+}
+
+.container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    text-align: center;
+}
