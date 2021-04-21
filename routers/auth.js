@@ -69,7 +69,7 @@ router.post('/login', (req, res, next) => {
                         message: 'Internal Server Error'
                     });
                 } else if (result) {
-                    const token = jwt.sign({name: user.name}, 'verySecretValue', {expiresIn: '1h'});
+                    const token = jwt.sign({hospitalId: user._id}, 'verySecretValue', {expiresIn: '1h'});
                     let message = 'Login Successful.'
                     return res.status(200).send({
                         message: message,

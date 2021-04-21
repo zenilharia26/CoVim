@@ -5,7 +5,7 @@
         <div class="container text-light bg-primary">
             <h3>Vaccines Remaining Covaxin</h3>
             <br>
-            <h3>1000&ensp;<span class="material-icons">medication</span></h3>
+            <h3>{{ resources ? resources.covaxin : '?' }}&ensp;<span class="material-icons">medication</span></h3>
         </div>
     </div>
 
@@ -13,7 +13,7 @@
         <div class="container text-light bg-primary">
             <h3>Vaccines Remaining Covishield</h3>
             <br>
-            <h3>1000&ensp;<span class="material-icons">medication</span></h3>
+            <h3>{{ resources ? resources.covaxin : '?' }}&ensp;<span class="material-icons">medication</span></h3>
         </div>
     </div>
 </div>
@@ -24,9 +24,9 @@
         <div class="container text-light bg-success">
             <h3>Resources Available</h3>
             <br>
-            <h3>1000&ensp;<span class="material-icons">single_bed</span></h3>
+            <h3>{{ resources ? resources.beds : '?' }}&ensp;<span class="material-icons">single_bed</span></h3>
             <br>
-            <h3>1000&ensp;O<sub>2</sub> Cylinders</h3>
+            <h3>{{ resources ? resources.oxygenCylinders : '?' }}&ensp;O<sub>2</sub> Cylinders</h3>
         </div>
     </div>
 </div>
@@ -59,7 +59,7 @@
                     <br>
                     <div class="row">
                         <div class="col-4 mx-auto">
-                            <button type="submit" class="btn btn-block btn-success">Request</button>
+                            <button type="button" class="btn btn-block btn-success" (click)="onClick()">Request</button>
                         </div>
                     </div>
                 </div>
