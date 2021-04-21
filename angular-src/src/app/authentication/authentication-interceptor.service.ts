@@ -19,7 +19,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
                     return next.handle(req);
                 }
                 const newRequest = req.clone({params: req.params.set('token', user.token)});
-                console.log('New request' + newRequest.params);
+                console.log('New request' + newRequest.body);
                 return next.handle(newRequest);
             })
         );

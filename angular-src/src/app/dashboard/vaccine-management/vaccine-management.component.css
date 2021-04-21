@@ -6,6 +6,9 @@
 .container {
     padding-top: 10px;
     padding-bottom: 10px;
-    border-radius: 15px;
+    border-radius: 5px;
     text-align: center;
+    z-index: 2;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px #222E3C;
 }

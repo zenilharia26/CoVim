@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { VaccineManagementService } from './vaccine-management.service';
 
 @Component({
@@ -28,7 +29,16 @@ export class VaccineManagementComponent implements OnInit {
     });
   }
 
-  onClick() {
+  onSubmitOrder(orderForm: NgForm) {
+    this.vaccineManagementService.requestVaccines(orderForm).subscribe(response => {
+      console.log(response);
+      if (response['resources']) {
+        this.resources.covaxin = response['resources'].covaxin;
+        this.resources.covishield = response['resources'].covishield;
+      }
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

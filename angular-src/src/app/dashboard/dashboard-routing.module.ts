@@ -5,7 +5,7 @@ import { DashboardComponent } from "./dashboard.component";
 import { VaccineManagementComponent } from "./vaccine-management/vaccine-management.component";
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent, canActivate: [AuthenticationGuard], children: [
+    { path: '', component: DashboardComponent, /*canActivate: [AuthenticationGuard],*/ children: [
         { path: '', redirectTo: 'vaccine-management' },
         { path: 'vaccine-management', component: VaccineManagementComponent }
     ] }

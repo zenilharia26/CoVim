@@ -12,6 +12,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthenticationInterceptorService } from './authentication/authentication-interceptor.service';
+import { VaccineManagementComponent } from './dashboard/vaccine-management/vaccine-management.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthenticationInterceptorService } from './authentication/authenticatio
     SignupComponent,
     LoginComponent,
     DashboardComponent,
+    VaccineManagementComponent,
   ],
   imports: [
     BrowserModule,
