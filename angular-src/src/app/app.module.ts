@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,8 +9,10 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthenticationInterceptorService } from './authentication/authentication-interceptor.service';
+import { VaccineManagementComponent } from './dashboard/vaccine-management/vaccine-management.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +23,16 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     SignupComponent,
     LoginComponent,
     DashboardComponent,
+    VaccineManagementComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

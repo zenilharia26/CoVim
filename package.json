@@ -25,5 +25,8 @@
     "mongoose": "^5.12.2",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.2.0"
+  },
+  "devDependencies": {
+    "typings": "^2.1.1"
   }
 }

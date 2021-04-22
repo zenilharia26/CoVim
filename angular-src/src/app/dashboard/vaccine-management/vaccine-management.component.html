@@ -1,0 +1,108 @@
+<!-- <p>vaccine-management works!</p> -->
+
+<div class="row m-3 d-flex justify-content-around">
+    <div class="col-3">
+        <div class="container text-dark bg-white">
+            <h3>Vaccines Remaining Covaxin</h3>
+            <br>
+            <h3>{{ resources ? resources.covaxin : '?' }}&ensp;<span class="material-icons">medication</span></h3>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="container text-dark bg-white">
+            <h3>Vaccines Remaining Covishield</h3>
+            <br>
+            <h3>{{ resources ? resources.covaxin : '?' }}&ensp;<span class="material-icons">medication</span></h3>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="container text-dark bg-white">
+            <h3>Resources Available</h3>
+            <br>
+            <h3>{{ resources ? resources.beds : '?' }}&ensp;<span class="material-icons">single_bed</span></h3>
+            <br>
+            <h3>{{ resources ? resources.oxygenCylinders : '?' }}&ensp;O<sub>2</sub> Cylinders</h3>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row m-3 d-flex justify-content-around">
+    <div class="col-4">
+        <div class="container text-dark bg-white">
+            <h3>Vaccines Utilised</h3>
+            <br>
+            <form [formGroup]="vaccinesUtilisedForm" (ngSubmit)="onSubmit()" *ngIf="vaccinesUtilisedForm">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="covaxin"><h4>Covaxin</h4></label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" id="covaxin" name="covaxin" type="number" formControlName="covaxin">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="covishield"><h4>Covishield</h4></label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" id="covishield" name="covishield" type="number" formControlName="covishield">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4 mx-auto">
+                            <button type="submit" class="btn btn-block btn-danger" [disabled]="vaccinesUtilisedForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="container text-dark bg-white">
+            <h3>Order Vaccines</h3>
+            <br>
+            <form [formGroup]="vaccinesRequestForm" (ngSubmit)="onRequest()" *ngIf="vaccinesRequestForm">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="covaxin"><h4>Covaxin</h4></label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" id="covaxin" name="covaxin" type="number" formControlName="covaxin">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="covishield"><h4>Covishield</h4></label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" id="covishield" name="covishield" type="number" formControlName="covishield">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4 mx-auto">
+                            <button type="submit" class="btn btn-block btn-success" [disabled]="vaccinesRequestForm.invalid">Request</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div *ngIf="error" class="container-fluid alert" [ngClass]="error ? 'alert-danger' : 'alert-succes'">
+    <span [ngClass]="error ? 'text-danger': 'text-success'">
+        There was an error
+    </span>
+</div>

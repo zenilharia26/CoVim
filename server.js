@@ -12,10 +12,12 @@ mongoose.connect('mongodb://localhost:27017/CoVim', {useNewUrlParser: true, useU
 
 const app = express();
 const authRouter = require('./routers/auth');
+const vaccineRouter = require('./routers/resource');
 
 app.use(cors());
 app.use(express.json());
 app.use('/auth', authRouter);
+app.use('/resource', vaccineRouter);
 
 const port = 3000;
 

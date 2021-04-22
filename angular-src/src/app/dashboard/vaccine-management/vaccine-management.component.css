@@ -1,0 +1,23 @@
+.material-icons {
+    vertical-align: text-bottom;
+    font-size: xx-large;
+}
+
+.container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 2;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px #222E3C;
+}
+
+.container-fluid {
+    width: fit-content;
+    text-align: center;
+}
+
+span {
+    padding: 10px;
+}
