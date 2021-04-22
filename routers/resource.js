@@ -63,7 +63,7 @@ router.get('/', authenticate, (req, res) => {
                 }
             });
         } else {
-            console.log('Illegal token');
+            console.log('Invalid token');
             return res.status(400).send({
                 message: 'Not Authorized'
             });
@@ -72,8 +72,6 @@ router.get('/', authenticate, (req, res) => {
 });
 
 router.post('', authenticate, (req, res) => {
-    // console.log(req.params);
-    // console.log(req.body);
     const reqCovaxin = req.body.covaxin;
     const reqCovishield = req.body.covishield;
 
@@ -118,6 +116,38 @@ router.post('', authenticate, (req, res) => {
             });
         }
     });
+});
+
+router.put('', authenticate, (req, res) => {
+    const hospitalId = req.hospitalId;
+    const covaxinUtilised = req.body.covaxin;
+    const covishieldUtilised = req.body.covishield;
+
+    Resource.findOneAndUpdate(
+        { hospitalId: hospitalId },
+        { "$inc": {covaxin: -covaxinUtilised, covishield: -covishieldUtilised} },
+        { new: true },
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                let message = 'Internal Server Error';
+                return res.status(500).send({
+                    message: message
+                });
+            } else if (result) {
+                let message = 'Updated Successfully';
+                return res.status(200).send({
+                    message: message,
+                    resources: result
+                });
+            } else {
+                let message = 'Invalid Token';
+                return res.status(400).send({
+                    message: message
+                });
+            }
+        }
+    );
 });
 
 module.exports = router;

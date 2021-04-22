@@ -34,14 +34,14 @@
         <div class="container text-dark bg-white">
             <h3>Vaccines Utilised</h3>
             <br>
-            <form class="form">
+            <form class="form" (ngSubmit)="onSubmitUtilised(utilisedVaccinesForm)" #utilisedVaccinesForm="ngForm">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
                             <label for="covaxin"><h4>Covaxin</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covaxin" name="covaxin" type="number">
+                            <input class="form-control" id="covaxin" name="covaxin" type="number" ngModel>
                         </div>
                     </div>
                     <br>
@@ -50,13 +50,13 @@
                             <label for="covishield"><h4>Covishield</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covishield" name="covishield" type="number">
+                            <input class="form-control" id="covishield" name="covishield" type="number" ngModel>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-4 mx-auto">
-                            <button type="button" class="btn btn-block btn-danger">Submit</button>
+                            <button type="submit" class="btn btn-block btn-danger">Submit</button>
                         </div>
                     </div>
                 </div>

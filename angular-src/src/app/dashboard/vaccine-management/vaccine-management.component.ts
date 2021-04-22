@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { VaccineManagementService } from './vaccine-management.service';
 
@@ -10,6 +10,10 @@ import { VaccineManagementService } from './vaccine-management.service';
 export class VaccineManagementComponent implements OnInit {
 
   public resources: any;
+  public isUtilisedFormValid: boolean;
+
+  @ViewChild('orderForm') private orderForm: NgForm;
+  @ViewChild('utilisedVaccinesForm') private utilisedVaccinesForm: NgForm;
 
   constructor(private vaccineManagementService: VaccineManagementService) { }
 
@@ -29,12 +33,30 @@ export class VaccineManagementComponent implements OnInit {
     });
   }
 
+  onCovaxinChange() {
+    this.isUtilisedFormValid = this.utilisedVaccinesForm.form.get('covaxin').value <= this.resources.covaxin;
+  }
+
+  onSubmitUtilised(utilisedVaccinesForm: NgForm) {
+    this.vaccineManagementService.utiliseVaccines(utilisedVaccinesForm).subscribe(response => {
+      console.log(response);
+      if (response['resources']) {
+        this.resources.covaxin = response['resources'].covaxin;
+        this.resources.covishield = response['resources'].covishield;
+        this.utilisedVaccinesForm.reset();
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
   onSubmitOrder(orderForm: NgForm) {
     this.vaccineManagementService.requestVaccines(orderForm).subscribe(response => {
       console.log(response);
       if (response['resources']) {
         this.resources.covaxin = response['resources'].covaxin;
         this.resources.covishield = response['resources'].covishield;
+        this.orderForm.reset();
       }
     }, err => {
       console.log(err);

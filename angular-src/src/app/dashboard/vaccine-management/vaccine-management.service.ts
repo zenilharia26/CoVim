@@ -14,4 +14,8 @@ export class VaccineManagementService {
     requestVaccines(orderForm: NgForm) {
         return this.httpClient.post('http://localhost:3000/resource', {covaxin: orderForm.value.covaxin, covishield: orderForm.value.covishield});
     }
+
+    utiliseVaccines(utilisedVaccinesForm: NgForm) {
+        return this.httpClient.put('http://localhost:3000/resource', {covaxin: utilisedVaccinesForm.value.covaxin, covishield: utilisedVaccinesForm.value.covishield});
+    }
 }
