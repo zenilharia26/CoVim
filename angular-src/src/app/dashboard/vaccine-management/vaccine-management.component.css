@@ -12,3 +12,12 @@
     box-sizing: border-box;
     box-shadow: 5px 5px 5px #222E3C;
 }
+
+.container-fluid {
+    width: fit-content;
+    text-align: center;
+}
+
+span {
+    padding: 10px;
+}

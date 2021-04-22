@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthenticationInterceptorService } from './authentication/authentication-interceptor.service';
 import { VaccineManagementComponent } from './dashboard/vaccine-management/vaccine-management.component';
@@ -29,7 +29,8 @@ import { VaccineManagementComponent } from './dashboard/vaccine-management/vacci
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorService, multi: true }],
   bootstrap: [AppComponent]

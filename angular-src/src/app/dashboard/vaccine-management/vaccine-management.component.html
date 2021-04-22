@@ -34,14 +34,14 @@
         <div class="container text-dark bg-white">
             <h3>Vaccines Utilised</h3>
             <br>
-            <form class="form" (ngSubmit)="onSubmitUtilised(utilisedVaccinesForm)" #utilisedVaccinesForm="ngForm">
+            <form [formGroup]="vaccinesUtilisedForm" (ngSubmit)="onSubmit()" *ngIf="vaccinesUtilisedForm">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
                             <label for="covaxin"><h4>Covaxin</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covaxin" name="covaxin" type="number" ngModel>
+                            <input class="form-control" id="covaxin" name="covaxin" type="number" formControlName="covaxin">
                         </div>
                     </div>
                     <br>
@@ -50,13 +50,13 @@
                             <label for="covishield"><h4>Covishield</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covishield" name="covishield" type="number" ngModel>
+                            <input class="form-control" id="covishield" name="covishield" type="number" formControlName="covishield">
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-4 mx-auto">
-                            <button type="submit" class="btn btn-block btn-danger">Submit</button>
+                            <button type="submit" class="btn btn-block btn-danger" [disabled]="vaccinesUtilisedForm.invalid">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -68,14 +68,14 @@
         <div class="container text-dark bg-white">
             <h3>Order Vaccines</h3>
             <br>
-            <form class="form" (ngSubmit)="onSubmitOrder(orderForm)" #orderForm="ngForm">
+            <form [formGroup]="vaccinesRequestForm" (ngSubmit)="onRequest()" *ngIf="vaccinesRequestForm">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
                             <label for="covaxin"><h4>Covaxin</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covaxin" name="covaxin" type="number" ngModel>
+                            <input class="form-control" id="covaxin" name="covaxin" type="number" formControlName="covaxin">
                         </div>
                     </div>
                     <br>
@@ -84,17 +84,25 @@
                             <label for="covishield"><h4>Covishield</h4></label>
                         </div>
                         <div class="col-8">
-                            <input class="form-control" id="covishield" name="covishield" type="number" ngModel>
+                            <input class="form-control" id="covishield" name="covishield" type="number" formControlName="covishield">
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-4 mx-auto">
-                            <button type="submit" class="btn btn-block btn-success">Request</button>
+                            <button type="submit" class="btn btn-block btn-success" [disabled]="vaccinesRequestForm.invalid">Request</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+</div>
+
+<br><br>
+
+<div *ngIf="error" class="container-fluid alert" [ngClass]="error ? 'alert-danger' : 'alert-succes'">
+    <span [ngClass]="error ? 'text-danger': 'text-success'">
+        There was an error
+    </span>
 </div>

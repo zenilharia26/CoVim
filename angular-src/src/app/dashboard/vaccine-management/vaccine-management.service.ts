@@ -11,11 +11,23 @@ export class VaccineManagementService {
         return this.httpClient.get('http://localhost:3000/resource');
     }
 
-    requestVaccines(orderForm: NgForm) {
-        return this.httpClient.post('http://localhost:3000/resource', {covaxin: orderForm.value.covaxin, covishield: orderForm.value.covishield});
+    requestVaccines(covaxinReq: number, covishieldReq: number) {
+        return this.httpClient.post(
+            'http://localhost:3000/resource', 
+            {
+                covaxin: covaxinReq, 
+                covishield: covishieldReq
+            }
+        );
     }
 
-    utiliseVaccines(utilisedVaccinesForm: NgForm) {
-        return this.httpClient.put('http://localhost:3000/resource', {covaxin: utilisedVaccinesForm.value.covaxin, covishield: utilisedVaccinesForm.value.covishield});
+    utiliseVaccines(covaxinUsed: number, covishieldUsed) {
+        return this.httpClient.put(
+            'http://localhost:3000/resource', 
+            {
+                covaxin: covaxinUsed,
+                covishield: covishieldUsed
+            }
+        );
     }
 }
