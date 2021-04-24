@@ -61,6 +61,20 @@ export class AuthenticationService {
         this.router.navigate(['/', 'home']);
     }
 
+    automaticLogin() {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (!userData) {
+            return;
+        } else {
+            const user = new User(userData.email, userData._token, userData.expiry);
+
+            if (user.token) {
+                this.user.next(user);
+                this.automaticLogout();
+            }
+        }
+    }
+
     automaticLogout() {
         this.expiryTimeout = setTimeout(() => {
             this.logout();

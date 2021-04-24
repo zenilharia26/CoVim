@@ -13,7 +13,7 @@
         <div class="container text-dark bg-white">
             <h3>Vaccines Remaining Covishield</h3>
             <br>
-            <h3>{{ resources ? resources.covaxin : '?' }}&ensp;<span class="material-icons">medication</span></h3>
+            <h3>{{ resources ? resources.covishield : '?' }}&ensp;<span class="material-icons">medication</span></h3>
         </div>
     </div>
 
@@ -101,8 +101,8 @@
 
 <br><br>
 
-<div *ngIf="error" class="container-fluid alert" [ngClass]="error ? 'alert-danger' : 'alert-succes'">
-    <span [ngClass]="error ? 'text-danger': 'text-success'">
-        There was an error
+<div *ngIf="message" class="container-fluid alert" [class.alert-danger]="error" [class.alert-success]="!error">
+    <span [class.text-danger]="error" [class.text-success]="!error">
+        {{ message }}
     </span>
 </div>

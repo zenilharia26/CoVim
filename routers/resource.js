@@ -84,9 +84,9 @@ router.post('', authenticate, (req, res) => {
             return res.status(500).send({
                 message: message
             });
-        } else if (result) {
+        } else if (result && result.nModified === 1) {
             const hospitalId = req.hospitalId;
-
+            
             Resource.findOneAndUpdate(
                 {hospitalId: hospitalId}, 
                 {"$inc": {covaxin: reqCovaxin, covishield: reqCovishield}},
@@ -99,7 +99,6 @@ router.post('', authenticate, (req, res) => {
                             message: message
                         });
                     } else if (result) {
-                        console.log(result);
                         let message = 'Request Accepted';
                         return res.status(200).send({
                             message: message,

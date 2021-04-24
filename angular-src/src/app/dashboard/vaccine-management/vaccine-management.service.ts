@@ -17,7 +17,8 @@ export class VaccineManagementService {
             {
                 covaxin: covaxinReq, 
                 covishield: covishieldReq
-            }
+            },
+            { observe: 'response' }
         );
     }
 
@@ -27,7 +28,8 @@ export class VaccineManagementService {
             {
                 covaxin: covaxinUsed,
                 covishield: covishieldUsed
-            }
+            },
+            { observe: 'response' }
         );
     }
 }

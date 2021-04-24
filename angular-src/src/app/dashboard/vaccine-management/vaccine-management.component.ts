@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm, Validators } from '@angular/forms';
+import { AbstractControl, NgForm, Validators } from '@angular/forms';
 import { VaccineManagementService } from './vaccine-management.service';
 import { FormGroup, FormControl } from '@angular/forms'
 
@@ -14,14 +14,20 @@ export class VaccineManagementComponent implements OnInit {
   vaccinesUtilisedForm: FormGroup;
   vaccinesRequestForm: FormGroup;
 
+  initialState = {'covaxin': 0, 'covishield': 0}
+
   error: boolean;
+  message: string;
+
+  notificationTimeout: any;
+  notificationTime: number = 5000;
 
   constructor(private vaccineManagementService: VaccineManagementService) { }
 
   ngOnInit(): void {
     this.vaccineManagementService.getResources().subscribe(response => {
       this.error = false;
-      let returnedResources = response['resources'];
+      let returnedResources = response['resources'];      
       this.resources = {
         covaxin: returnedResources.covaxin,
         covishield: returnedResources.covishield,
@@ -41,13 +47,18 @@ export class VaccineManagementComponent implements OnInit {
     const covishieldUsed = this.vaccinesUtilisedForm.value['covishield'];
     
     this.vaccineManagementService.utiliseVaccines(covaxinUsed, covishieldUsed).subscribe(response => {
-      console.log(response);
-      if (response['resources']) {
-        this.resources.covaxin = response['resources'].covaxin;
-        this.resources.covishield = response['resources'].covishield;
+      this.error = false;
+      this.message = response['body']['message'];
+      if (response['body']['resources']) {
+        this.resources.covaxin = response['body']['resources'].covaxin;
+        this.resources.covishield = response['body']['resources'].covishield;
       }
+      this.vaccinesUtilisedForm.reset(this.initialState);
+      this.resetNotifications();
     }, err => {
-      console.log(err);
+      this.error = true;
+      this.message = err.error.message;
+      this.resetNotifications();
     });
   }
 
@@ -56,25 +67,54 @@ export class VaccineManagementComponent implements OnInit {
     const covishieldReq = this.vaccinesRequestForm.value['covishield'];
     
     this.vaccineManagementService.requestVaccines(covaxinReq, covishieldReq).subscribe(response => {
-      console.log(response);
-      if (response['resources']) {
-        this.resources.covaxin = response['resources'].covaxin;
-        this.resources.covishield = response['resources'].covishield;
+      this.error = false;
+      this.message = response['body']['message'];
+      if (response['body']['resources']) {
+        this.resources.covaxin = response['body']['resources'].covaxin;
+        this.resources.covishield = response['body']['resources'].covishield;
       }
+      this.vaccinesRequestForm.reset(this.initialState);
+      this.resetNotifications();
     }, err => {
-      console.log(err);
+      this.error = true;
+      this.message = err.error.message;
+      this.resetNotifications();
     });
   }
 
   initialiseForms() {
     this.vaccinesUtilisedForm = new FormGroup({
-      'covaxin': new FormControl(0, [Validators.required, Validators.min(0), Validators.max(this.resources.covaxin)]),
-      'covishield': new FormControl(0, [Validators.min(0), Validators.max(this.resources.covishield)]),
+      'covaxin': new FormControl(0, 
+        [
+          Validators.required, 
+          Validators.min(0), 
+          (control: AbstractControl) => Validators.max(this.resources.covaxin)(control)
+        ]
+      ),
+      'covishield': new FormControl(0, 
+        [
+          Validators.required,
+          Validators.min(0), 
+          (control: AbstractControl) => Validators.max(this.resources.covishield)(control)
+        ]
+      ),
     });
 
     this.vaccinesRequestForm = new FormGroup({
-      'covaxin': new FormControl(0, [Validators.required]),
-      'covishield': new FormControl(0, [Validators.required]),
+      'covaxin': new FormControl(0, [Validators.required, Validators.min(0)]),
+      'covishield': new FormControl(0, [Validators.required, Validators.min(0)]),
     });
+  }
+
+  resetNotifications() {
+    if (this.notificationTimeout) {
+      clearTimeout(this.notificationTimeout);
+      this.notificationTimeout = null;
+    }
+
+    this.notificationTimeout = setTimeout(() => {
+      this.error = false;
+      this.message = null;
+    }, this.notificationTime);
   }
 }
